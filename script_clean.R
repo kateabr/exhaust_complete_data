@@ -99,3 +99,44 @@ tukiru.vs.cnt %>%
   geom_text(aes(y = n/3 + c(0, cumsum(n)[-length(n)]), 
                 label = n), size = 4)
 dev.off()
+
+
+# - - - - HATERU - - - -
+
+hateru.vs.cnt <- read.csv("hateru_cnt_vs.csv", encoding = "UTF-8")
+hateru.ns.cnt <- read.csv("hateru_cnt_ns.csv", encoding = "UTF-8")
+
+cairo_pdf('hateru_v.pdf' , family="Yu Mincho")
+hateru.vs.cnt %>%
+  ggplot(., aes(x=subj, y=n, fill=subj)) +
+  geom_bar(width = 1, stat = "identity") +
+  labs(x = "Слово", y = "Количество вхождений") +
+  guides(fill = guide_legend(title = element_blank()))+
+  theme(axis.text.x=element_blank(), axis.ticks.x=element_blank())
+dev.off() 
+
+cairo_pdf('hateru_n.pdf' , family="Yu Mincho")
+hateru.ns.cnt %>%
+  filter(cnt > 1) %>%
+  ggplot(., aes(x=subj, y=cnt, fill=subj)) +
+  geom_bar(width = 1, stat = "identity") +
+  labs(x = "Слово", y = "Количество вхождений") +
+  guides(fill = guide_legend(title = element_blank()))+
+  theme(axis.text.x=element_blank(), axis.ticks.x=element_blank())
+dev.off()
+
+cairo_pdf('hateru_tot.pdf' , family="Yu Mincho")
+hateru.vs.cnt %>%
+  mutate(v_tot = sum(n)) %>%
+  select(v_tot) %>%
+  unique() %>%
+  mutate(n_tot = sum(hateru.ns.cnt$cnt)) %>%
+  gather(value = "n", key = "type") %>%
+  ggplot(., aes(x="", y=n, fill=type)) +
+  geom_bar(width = 1, stat = "identity") +
+  coord_polar("y", start=0) +
+  theme(axis.title=element_blank(), legend.title = element_blank()) +
+  scale_fill_discrete(labels = c("смысловой", "вспомогательный")) +
+  geom_text(aes(y = n/3 + c(0, cumsum(n)[-length(n)]), 
+                label = n), size = 4)
+dev.off()
