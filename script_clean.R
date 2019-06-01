@@ -141,7 +141,7 @@ hateru.vs.cnt %>%
                 label = n), size = 4)
 dev.off()
 
-# - - - - NAKUNARU_DIE - - - -
+# - - - - OWARU - - - -
 
 owaru.all.ns <- read.csv("owaru_ns.csv", encoding = "UTF-8")
 
@@ -251,7 +251,7 @@ shimau.vs.cnt %>%
   theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(), legend.direction = "horizontal", legend.position="bottom")
 dev.off() 
 
-cairo_pdf('shimau_n.pdf' , family="Yu Mincho")
+cairo_pdf('kireru_n.pdf' , family="Yu Mincho")
 shimau.ns.cnt %>%
   ggplot(., aes(x=subj, y=n, fill=subj)) +
   geom_bar(width = 1, stat = "identity") +
@@ -260,7 +260,7 @@ shimau.ns.cnt %>%
   theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(), legend.direction = "horizontal", legend.position="bottom")
 dev.off() 
 
-cairo_pdf('shimau_tot.pdf' , family="Yu Mincho")
+cairo_pdf('kireru_tot.pdf' , family="Yu Mincho")
 kireru.vs.cnt %>%
   summarise(v_tot = sum(n)) %>%
   mutate(n_tot = sum(kireru.ns.cnt$cnt)) %>%
