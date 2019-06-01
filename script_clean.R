@@ -273,3 +273,18 @@ kireru.vs.cnt %>%
   geom_text(aes(y = n/3 + c(0, cumsum(n)[-length(n)]), 
                 label = n), size = 4)
 dev.off() 
+
+
+# - - - - NAKUNARU_NOT_DIE - - - -
+
+nakunaru_not_die.all.ns <- read.csv("nakunaru_not_die_ns.csv", encoding = "UTF-8")
+
+cairo_pdf('nakunaru_not_die_ns.pdf' , family="Yu Mincho")
+nakunaru_not_die.all.ns %>%
+  filter(cnt > 1) %>%
+  ggplot(., aes(x=subj, y=cnt, fill=subj)) +
+  geom_bar(width = 1, stat = "identity") +
+  labs(x = "Слово", y = "Количество вхождений") +
+  guides(fill = guide_legend(title = element_blank()))+
+  theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(), legend.direction = "horizontal", legend.position="bottom")
+dev.off()
