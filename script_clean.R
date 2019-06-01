@@ -170,7 +170,7 @@ taeru.vs.cnt %>%
   theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(), legend.direction = "horizontal", legend.position="bottom")
 dev.off() 
 
-cairo_pdf('yam_n.pdf' , family="Yu Mincho")
+cairo_pdf('taeru_n.pdf' , family="Yu Mincho")
 taeru.ns.cnt %>%
   filter(cnt > 1) %>%
   ggplot(., aes(x=subj, y=cnt, fill=subj)) +
@@ -180,12 +180,51 @@ taeru.ns.cnt %>%
   theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(), legend.direction = "horizontal", legend.position="bottom")
 dev.off() 
 
-cairo_pdf('yam_tot.pdf' , family="Yu Mincho")
+cairo_pdf('taeru_tot.pdf' , family="Yu Mincho")
 taeru.vs.cnt %>%
   mutate(v_tot = sum(n)) %>%
   select(v_tot) %>%
   unique() %>%
   mutate(n_tot = sum(taeru.ns.cnt$cnt)) %>%
+  gather(value = "n", key = "type") %>%
+  ggplot(., aes(x="", y=n, fill=type)) +
+  geom_bar(width = 1, stat = "identity") +
+  coord_polar("y", start=0) +
+  theme(axis.title=element_blank(), legend.title = element_blank(), legend.direction = "vertical", legend.position="bottom") +
+  scale_fill_discrete(labels = c("с существительным", "с глаголом")) +
+  geom_text(aes(y = n/3 + c(0, cumsum(n)[-length(n)]), 
+                label = n), size = 4)
+dev.off() 
+
+
+# - - - - SHIMAU - - - -
+
+shimau.ns.cnt <- read.csv("shimau_ns_cnt.csv", encoding = 'UTF-8')
+shimau.vs.cnt <- read.csv("shimau_vs_cnt.csv", encoding = 'UTF-8')
+
+cairo_pdf('shimau_v.pdf' , family="Yu Mincho")
+shimau.ns.cnt %>%
+  ggplot(., aes(x=subj, y=n, fill=subj)) +
+  geom_bar(width = 1, stat = "identity") +
+  labs(x = "Слово", y = "Количество вхождений") +
+  guides(fill = guide_legend(title = element_blank()))+
+  theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(), legend.direction = "horizontal", legend.position="bottom")
+dev.off() 
+
+cairo_pdf('shimau_n.pdf' , family="Yu Mincho")
+shimau.vs.cnt %>%
+  filter(n > 1) %>%
+  ggplot(., aes(x=subj, y=n, fill=subj)) +
+  geom_bar(width = 1, stat = "identity") +
+  labs(x = "Слово", y = "Количество вхождений") +
+  guides(fill = guide_legend(title = element_blank()))+
+  theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(), legend.direction = "horizontal", legend.position="bottom")
+dev.off() 
+
+cairo_pdf('shimau_tot.pdf' , family="Yu Mincho")
+shimau.ns.cnt %>%
+  summarise(v_tot = sum(n)) %>%
+  mutate(n_tot = sum(shimau.vs.cnt$n)) %>%
   gather(value = "n", key = "type") %>%
   ggplot(., aes(x="", y=n, fill=type)) +
   geom_bar(width = 1, stat = "identity") +
