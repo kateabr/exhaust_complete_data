@@ -203,7 +203,7 @@ shimau.ns.cnt <- read.csv("shimau_ns_cnt.csv", encoding = 'UTF-8')
 shimau.vs.cnt <- read.csv("shimau_vs_cnt.csv", encoding = 'UTF-8')
 
 cairo_pdf('shimau_v.pdf' , family="Yu Mincho")
-shimau.ns.cnt %>%
+shimau.vs.cnt %>%
   ggplot(., aes(x=subj, y=n, fill=subj)) +
   geom_bar(width = 1, stat = "identity") +
   labs(x = "Слово", y = "Количество вхождений") +
@@ -212,7 +212,7 @@ shimau.ns.cnt %>%
 dev.off() 
 
 cairo_pdf('shimau_n.pdf' , family="Yu Mincho")
-shimau.vs.cnt %>%
+shimau.ns.cnt %>%
   filter(n > 1) %>%
   ggplot(., aes(x=subj, y=n, fill=subj)) +
   geom_bar(width = 1, stat = "identity") +
@@ -222,15 +222,54 @@ shimau.vs.cnt %>%
 dev.off() 
 
 cairo_pdf('shimau_tot.pdf' , family="Yu Mincho")
-shimau.ns.cnt %>%
+shimau.vs.cnt %>%
   summarise(v_tot = sum(n)) %>%
-  mutate(n_tot = sum(shimau.vs.cnt$n)) %>%
+  mutate(n_tot = sum(shimau.ns.cnt$n)) %>%
+  mutate(hide_tot = 113) %>%
   gather(value = "n", key = "type") %>%
   ggplot(., aes(x="", y=n, fill=type)) +
   geom_bar(width = 1, stat = "identity") +
   coord_polar("y", start=0) +
   theme(axis.title=element_blank(), legend.title = element_blank(), legend.direction = "vertical", legend.position="bottom") +
-  scale_fill_discrete(labels = c("с существительным", "с глаголом")) +
+  scale_fill_discrete(labels = c("прятать", "с существительным", "с глаголом")) +
+  geom_text(aes(y = n/3 + c(0, cumsum(n)[-length(n)]), 
+                label = n), size = 4)
+dev.off() 
+
+
+# - - - - KIRERU - - - -
+
+kireru.ns.cnt <- read.csv("kireru_ns_cnt.csv", encoding = 'UTF-8')
+kireru.vs.cnt <- read.csv("kireru_vs_cnt.csv", encoding = 'UTF-8')
+
+cairo_pdf('kireru_v.pdf' , family="Yu Mincho")
+shimau.vs.cnt %>%
+  ggplot(., aes(x=subj, y=n, fill=subj)) +
+  geom_bar(width = 1, stat = "identity") +
+  labs(x = "Слово", y = "Количество вхождений") +
+  guides(fill = guide_legend(title = element_blank()))+
+  theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(), legend.direction = "horizontal", legend.position="bottom")
+dev.off() 
+
+cairo_pdf('shimau_n.pdf' , family="Yu Mincho")
+shimau.ns.cnt %>%
+  ggplot(., aes(x=subj, y=n, fill=subj)) +
+  geom_bar(width = 1, stat = "identity") +
+  labs(x = "Слово", y = "Количество вхождений") +
+  guides(fill = guide_legend(title = element_blank()))+
+  theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(), legend.direction = "horizontal", legend.position="bottom")
+dev.off() 
+
+cairo_pdf('shimau_tot.pdf' , family="Yu Mincho")
+kireru.vs.cnt %>%
+  summarise(v_tot = sum(n)) %>%
+  mutate(n_tot = sum(kireru.ns.cnt$cnt)) %>%
+  gather(value = "n", key = "type") %>%
+  ggplot(., aes(x="", y=n, fill=type)) +
+  geom_bar(width = 1, stat = "identity") +
+  coord_polar("y", start=0) +
+  theme(axis.title=element_blank(), legend.title = element_blank(), legend.direction = "vertical", legend.position="bottom") +
+  scale_fill_discrete(labels = c("с глаголом", "с существительным")) +
   geom_text(aes(y = n/3 + c(0, cumsum(n)[-length(n)]), 
                 label = n), size = 4)
 dev.off() 
