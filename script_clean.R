@@ -216,7 +216,7 @@ cairo_pdf('shimau_tot.pdf' , family="Yu Mincho")
 shimau.vs.cnt %>%
   summarise(v_tot = sum(n)) %>%
   mutate(n_tot = sum(shimau.ns.cnt$n)) %>%
-  mutate(hide_tot = 113) %>%
+  mutate(hide_tot = 114) %>%
   gather(value = "n", key = "type") %>%
   ggplot(., aes(x="", y=n, fill=type)) +
   geom_bar(width = 1, stat = "identity") +
