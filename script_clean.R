@@ -1,5 +1,3 @@
-setwd("D:\\Desktop\\course_work\\final_tables\\exhaust_complete_data")
-
 library(tidyverse)
 library(ggplot2)
 library(ggmosaic)
@@ -8,10 +6,10 @@ lbls <- c("смысловой", "в составе композита")
 
 # - - - - YAMU - - - -
 
-yam.cnt.ns <- read.csv("yam_ns_cnt.csv", encoding = 'UTF-8')
-yam.cnt.vs <- read.csv("yam_vs_cnt.csv", encoding = 'UTF-8')
+yam.cnt.ns <- read.csv("csv/yam_ns_cnt.csv", encoding = 'UTF-8')
+yam.cnt.vs <- read.csv("csv/yam_vs_cnt.csv", encoding = 'UTF-8')
 
-cairo_pdf('yam_v.pdf' , family="Yu Mincho")
+cairo_pdf('pdf/yam_v.pdf', width = 6.5, height = 3.5, family = "FreeSans")
 yam.cnt.vs %>%
   select(-X,-subj) %>%
   group_by(translation) %>%
@@ -26,7 +24,7 @@ yam.cnt.vs %>%
   geom_label(label = yam.cnt.vs$cnt, show.legend = FALSE)
 dev.off() 
 
-cairo_pdf('yam_n.pdf' , family="Yu Mincho")
+cairo_pdf('pdf/yam_n.pdf', width = 6.5, height = 3.5, family = "FreeSans")
 yam.cnt.ns %>%
   select(-X,-subj) %>%
   group_by(translation) %>%
@@ -41,7 +39,7 @@ yam.cnt.ns %>%
   geom_label(label = yam.cnt.ns$cnt, show.legend = FALSE)
 dev.off() 
 
-cairo_pdf('yam_tot.pdf' , family="Yu Mincho")
+cairo_pdf('pdf/yam_tot.pdf', width = 2.6, height = 3.5, family = "FreeSans")
 yam.cnt.vs %>%
   summarise(v_tot = sum(cnt)) %>%
   mutate(n_tot = sum(yam.cnt.ns$cnt)) %>%
@@ -58,9 +56,9 @@ dev.off()
 
 # - - - - NAKUNARU_DIE - - - -
 
-nakunaru_die.all.ns <- read.csv("nakunaru_die_ns.csv", encoding = "UTF-8")
+nakunaru_die.all.ns <- read.csv("csv/nakunaru_die_ns.csv", encoding = "UTF-8")
 
-cairo_pdf('nakunaru_die_ns.pdf' , family="Yu Mincho")
+cairo_pdf('pdf/nakunaru_die_ns.pdf', width = 6.5, height = 3.5, family = "FreeSans")
 nakunaru_die.all.ns %>%
   ggplot(., aes(x=translation, y=n, fill=translation)) +
   geom_bar(width = 1, stat = "identity") +
@@ -73,10 +71,10 @@ dev.off()
 
 # - - - - TSUKIRU - - - -
 
-tukiru.vs.cnt <- read.csv("tukiru_cnt_vs.csv", encoding = "UTF-8")
-tukiru.ns.cnt <- read.csv("tukiru_cnt_ns.csv", encoding = "UTF-8")
+tukiru.vs.cnt <- read.csv("csv/tukiru_cnt_vs.csv", encoding = "UTF-8")
+tukiru.ns.cnt <- read.csv("csv/tukiru_cnt_ns.csv", encoding = "UTF-8")
 
-cairo_pdf('tukiru_v.pdf' , family="Yu Mincho")
+cairo_pdf('pdf/tukiru_v.pdf', width = 6.5, height = 3.5, family = "FreeSans")
 tukiru.vs.cnt %>%
   select(-X,-subj) %>%
   group_by(translation) %>%
@@ -91,7 +89,7 @@ tukiru.vs.cnt %>%
 
 dev.off() 
 
-cairo_pdf('tukiru_n.pdf' , family="Yu Mincho")
+cairo_pdf('pdf/tukiru_n.pdf', width = 6.5, height = 3.5, family = "FreeSans")
 tukiru.ns.cnt %>%
   select(-X,-subj) %>%
   group_by(translation) %>%
@@ -106,7 +104,7 @@ tukiru.ns.cnt %>%
   geom_label(label = tukiru.ns.cnt$cnt, show.legend = FALSE)
 dev.off()
 
-cairo_pdf('tukiru_tot.pdf' , family="Yu Mincho")
+cairo_pdf('pdf/tukiru_tot.pdf', width = 2.6, height = 3.5, family = "FreeSans")
 tukiru.vs.cnt %>%
   summarise(v_tot = sum(cnt)) %>%
   mutate(n_tot = sum(tukiru.ns.cnt$cnt)) %>%
@@ -123,10 +121,10 @@ dev.off()
 
 # - - - - HATERU - - - -
 
-hateru.vs.cnt <- read.csv("hateru_cnt_vs.csv", encoding = "UTF-8")
-hateru.ns.cnt <- read.csv("hateru_cnt_ns.csv", encoding = "UTF-8")
+hateru.vs.cnt <- read.csv("csv/hateru_cnt_vs.csv", encoding = "UTF-8")
+hateru.ns.cnt <- read.csv("csv/hateru_cnt_ns.csv", encoding = "UTF-8")
 
-cairo_pdf('hateru_v.pdf' , family="Yu Mincho")
+cairo_pdf('pdf/hateru_v.pdf', width = 6.5, height = 3.5, family = "FreeSans")
 hateru.vs.cnt %>%
   select(-X,-subj) %>%
   group_by(translation) %>%
@@ -140,7 +138,7 @@ hateru.vs.cnt %>%
   geom_label(label = hateru.vs.cnt$cnt, show.legend = FALSE)
 dev.off() 
 
-cairo_pdf('hateru_n.pdf' , family="Yu Mincho")
+cairo_pdf('pdf/hateru_n.pdf', width = 6.5, height = 3.5, family = "FreeSans")
 hateru.ns.cnt %>%
   select(-X,-subj) %>%
   group_by(translation) %>%
@@ -155,7 +153,7 @@ hateru.ns.cnt %>%
   geom_label(label = hateru.ns.cnt$cnt, show.legend = FALSE)
 dev.off()
 
-cairo_pdf('hateru_tot.pdf' , family="Yu Mincho")
+cairo_pdf('pdf/hateru_tot.pdf', width = 2.6, height = 3.5, family = "FreeSans")
 hateru.vs.cnt %>%
   summarise(v_tot = sum(cnt)) %>%
   mutate(n_tot = sum(hateru.ns.cnt$cnt)) %>%
@@ -171,10 +169,10 @@ dev.off()
 
 # - - - - OWARU - - - -
 
-owaru.ns.cnt <- read.csv("owaru_cnt_ns.csv", encoding = "UTF-8")
-owaru.vs.cnt <- read.csv("owaru_cnt_vs.csv", encoding = "UTF-8")
+owaru.ns.cnt <- read.csv("csv/owaru_cnt_ns.csv", encoding = "UTF-8")
+owaru.vs.cnt <- read.csv("csv/owaru_cnt_vs.csv", encoding = "UTF-8")
 
-cairo_pdf('owaru_ns.pdf' , family="Yu Mincho")
+cairo_pdf('pdf/owaru_ns.pdf', width = 6.5, height = 3.5, family = "FreeSans")
 owaru.ns.cnt %>%
   select(-X,-subj) %>%
   group_by(translation) %>%
@@ -189,7 +187,7 @@ owaru.ns.cnt  %>%
   geom_label(label = owaru.ns.cnt$cnt, show.legend = FALSE)
 dev.off()
 
-cairo_pdf('owaru_vs.pdf' , family="Yu Mincho")
+cairo_pdf('pdf/owaru_vs.pdf', width = 6.5, height = 3.5, family = "FreeSans")
 owaru.vs.cnt %>%
   select(-X,-subj) %>%
   group_by(translation) %>%
@@ -203,7 +201,7 @@ owaru.vs.cnt  %>%
   geom_label(label = owaru.vs.cnt$cnt, show.legend = FALSE)
 dev.off()
 
-cairo_pdf('owaru_tot.pdf' , family="Yu Mincho")
+cairo_pdf('pdf/owaru_tot.pdf', width = 2.6, height = 3.5, family = "FreeSans")
 owaru.vs.cnt %>%
   summarise(v_tot = sum(cnt)) %>%
   mutate(n_tot = sum(owaru.ns.cnt$cnt)) %>%
@@ -219,10 +217,10 @@ dev.off()
 
 # - - - - TAERU - - - -
 
-taeru.ns.cnt <- read.csv("taeru_cnt_ns.csv", encoding = 'UTF-8')
-taeru.vs.cnt <- read.csv("taeru_cnt_vs.csv", encoding = 'UTF-8')
+taeru.ns.cnt <- read.csv("csv/taeru_cnt_ns.csv", encoding = 'UTF-8')
+taeru.vs.cnt <- read.csv("csv/taeru_cnt_vs.csv", encoding = 'UTF-8')
 
-cairo_pdf('taeru_v.pdf' , family="Yu Mincho")
+cairo_pdf('pdf/taeru_v.pdf', width = 6.5, height = 3.5, family = "FreeSans")
 taeru.vs.cnt %>%
   select(-X,-subj) %>%
   group_by(translation) %>%
@@ -236,7 +234,7 @@ taeru.vs.cnt %>%
   geom_label(label = taeru.vs.cnt$cnt, show.legend = FALSE)
 dev.off() 
 
-cairo_pdf('taeru_n.pdf' , family="Yu Mincho")
+cairo_pdf('pdf/taeru_n.pdf', width = 6.5, height = 3.5, family = "FreeSans")
 taeru.ns.cnt %>%
   select(-X,-subj) %>%
   group_by(translation) %>%
@@ -251,7 +249,7 @@ taeru.ns.cnt %>%
   geom_label(label = taeru.ns.cnt$cnt, show.legend = FALSE)
 dev.off() 
 
-cairo_pdf('taeru_tot.pdf' , family="Yu Mincho")
+cairo_pdf('pdf/taeru_tot.pdf', width = 2.6, height = 3.5, family = "FreeSans")
 taeru.vs.cnt %>%
   summarise(v_tot = sum(cnt)) %>%
   mutate(n_tot = sum(taeru.ns.cnt$cnt)) %>%
@@ -267,10 +265,10 @@ dev.off()
 
 # - - - - KIRERU - - - -
 
-kireru.ns.cnt <- read.csv("kireru_cnt_ns.csv", encoding = 'UTF-8')
-kireru.vs.cnt <- read.csv("kireru_cnt_vs.csv", encoding = 'UTF-8')
+kireru.ns.cnt <- read.csv("csv/kireru_cnt_ns.csv", encoding = 'UTF-8')
+kireru.vs.cnt <- read.csv("csv/kireru_cnt_vs.csv", encoding = 'UTF-8')
 
-cairo_pdf('kireru_v.pdf' , family="Yu Mincho")
+cairo_pdf('pdf/kireru_v.pdf', width = 6.5, height = 3.5, family = "FreeSans")
 kireru.vs.cnt %>%
   select(-X,-subj) %>%
   group_by(translation) %>%
@@ -284,7 +282,7 @@ kireru.vs.cnt %>%
   geom_label(label = kireru.vs.cnt$cnt, show.legend = FALSE)
 dev.off() 
 
-cairo_pdf('kireru_n.pdf' , family="Yu Mincho")
+cairo_pdf('pdf/kireru_n.pdf', width = 6.5, height = 3.5, family = "FreeSans")
 kireru.ns.cnt %>%
   select(-X,-subj) %>%
   group_by(translation) %>%
@@ -298,7 +296,7 @@ kireru.ns.cnt%>%
   geom_label(label = kireru.ns.cnt$cnt, show.legend = FALSE)
 dev.off() 
 
-cairo_pdf('kireru_tot.pdf' , family="Yu Mincho")
+cairo_pdf('pdf/kireru_tot.pdf', width = 2.6, height = 3.5, family = "FreeSans")
 kireru.vs.cnt %>%
   summarise(v_tot = sum(cnt)) %>%
   mutate(n_tot = sum(kireru.ns.cnt$cnt)) %>%
@@ -315,9 +313,9 @@ dev.off()
 
 # - - - - NAKUNARU_NOT_DIE - - - -
 
-nakunaru_not_die.all.ns <- read.csv("nakunaru_not_die_ns.csv", encoding = "UTF-8")
+nakunaru_not_die.all.ns <- read.csv("csv/nakunaru_not_die_ns.csv", encoding = "UTF-8")
 
-cairo_pdf('nakunaru_not_die_ns.pdf' , family="Yu Mincho")
+cairo_pdf('pdf/nakunaru_not_die_ns.pdf', width = 6.5, height = 3.5, family = "FreeSans")
 nakunaru_not_die.all.ns %>%
   select(-X,-subj) %>%
   group_by(translation) %>%
