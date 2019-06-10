@@ -3,7 +3,7 @@ library(ggplot2)
 library(ggmosaic)
 
 draw_tot <- function(verb, noun) {
-  lbls <- c("сольное", "в составе композита")
+  lbls <- c("самостоятельное", "в составе композита")
   
   verb %>%
     summarise(v_tot = sum(n)) %>%
@@ -94,7 +94,7 @@ draw_spec(hateru.vs.cnt, threshold = 0)
 dev.off() 
 
 cairo_pdf('pdf/hateru_n.pdf', width = 6.5, height = 3.5, family = "FreeSans")
-draw_spec(hateru.ns.cnt, threshold = 1)
+draw_spec(hateru.ns.cnt, threshold = 0)
 dev.off()
 
 cairo_pdf('pdf/hateru_tot.pdf', width = 2.6, height = 3.5, family = "FreeSans")
@@ -160,7 +160,7 @@ kireru.stats %>%
   geom_bar(width = 1, stat = "identity") +
   coord_polar("y", start=0) +
   theme(axis.title=element_blank(), legend.title = element_blank(), legend.direction = "vertical", legend.position="bottom") +
-  scale_fill_discrete(labels = c("сольное", "омонимичное вхождение", "в составе композита")) +
+  scale_fill_discrete(labels = c("самостоятельное", "омонимичное", "в составе композита")) +
   geom_text(aes(y = n/3 + c(0, cumsum(n)[-length(n)]), 
                 label = n), size = 4)
 dev.off() 
